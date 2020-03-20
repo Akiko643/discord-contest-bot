@@ -1,7 +1,11 @@
+import 'module-alias/register';
+
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
 
 import { checkForNewContests } from './notify';
+
+import '@/platforms/codeforces';
 
 dotenv.config();
 if (!process.env.DISCORD_TOKEN) {
@@ -14,7 +18,10 @@ export const subscribedChannels: (
   | Discord.DMChannel
 )[] = [];
 
-client.once('ready', () => setInterval(checkForNewContests, 60 * 60 * 1000));
+client.once('ready', () => {
+  setInterval(checkForNewContests, 60 * 60 * 1000);
+  checkForNewContests();
+});
 
 client.on('message', message => {
   if (message.author.bot) return;

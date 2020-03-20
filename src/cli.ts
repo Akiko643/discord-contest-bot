@@ -3,7 +3,8 @@ import 'module-alias/register';
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
 
-import { checkForNewContests } from './notify';
+import { formatUpcomingEvent } from './event';
+import { checkForNewContests, getUpcomingEvents } from './notify';
 
 import '@/platforms/codeforces';
 
@@ -23,11 +24,29 @@ client.once('ready', () => {
   checkForNewContests();
 });
 
-client.on('message', message => {
+client.on('message', async message => {
   if (message.author.bot) return;
-  if (message.content === '!join') {
-    message.channel.send('Okay, I will notify you about upcoming contests!');
-    subscribedChannels.push(message.channel);
+
+  // eslint-disable-next-line default-case
+  switch (message.content) {
+    case '!subscribe':
+      message.channel.send(
+        'Okay, I will notify you about upcoming contests here!',
+      );
+      subscribedChannels.push(message.channel);
+      break;
+    case '!upcoming':
+      message.channel.send('Okay, let me check for upcoming events...');
+      (await getUpcomingEvents())
+        .map(formatUpcomingEvent)
+        .forEach(eventMessage => message.channel.send(eventMessage));
+      break;
+    case '!help':
+      message.channel.send(
+        '!upcoming - Upcoming contests\n' +
+          '!subscribe - Notify upcoming events in this channel',
+      );
+      break;
   }
 });
 

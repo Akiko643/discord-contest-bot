@@ -2,6 +2,7 @@ export type UpcomingEvent = {
   id: string;
   name: string;
   type: string;
+  platform: string;
   startTime: number;
 };
 

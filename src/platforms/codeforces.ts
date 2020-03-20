@@ -35,6 +35,7 @@ async function poll(): Promise<UpcomingEvent[]> {
     id: `codeforces-${contest.id}`,
     name: contest.name,
     type: contest.type,
+    platform: 'Codeforces',
     startTime: contest.startTimeSeconds,
   }));
 }

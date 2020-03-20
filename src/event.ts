@@ -1,5 +1,8 @@
+import Discord from 'discord.js';
+
 export type UpcomingEvent = {
   id: string;
+  url: string;
   name: string;
   type: string;
   platform: string;
@@ -25,3 +28,14 @@ export const notifyIntervals = [
   { remainingTime: 30 * minute, message: '30 minutes' },
   { remainingTime: 5 * minute, message: 'five minutes' },
 ];
+
+export function formatUpcomingEvent(
+  event: UpcomingEvent,
+): Discord.MessageEmbed {
+  return new Discord.MessageEmbed()
+    .setURL(event.url)
+    .setColor('#0099ff')
+    .setTitle(`${event.name} on ${event.platform}`)
+    .addField('Type', event.type)
+    .addField('Start time', new Date(event.startTime * 1000).toString());
+}

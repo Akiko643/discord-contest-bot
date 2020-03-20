@@ -33,6 +33,7 @@ async function poll(): Promise<UpcomingEvent[]> {
     .catch(() => []);
   return upcomingContests.map(contest => ({
     id: `codeforces-${contest.id}`,
+    url: `https://codeforces.com/contests/${contest.id}`,
     name: contest.name,
     type: contest.type,
     platform: 'Codeforces',

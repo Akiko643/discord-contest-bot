@@ -16,12 +16,20 @@ function handleNewContest(contest: UpcomingEvent) {
   // For each interval in notifyIntervals create timeout sending notification to subscribedChannels
 }
 
+export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
+  const upcoming = [];
+  await Promise.all(
+    Array.from(eventSources.values()).map(async source => {
+      const events = await source.poll();
+      upcoming.push(...events);
+    }),
+  );
+  return upcoming;
+}
+
 // checkForNewContests fetches list of upcoming events and add new contests if found
-export function checkForNewContests() {
-  eventSources.forEach(async source => {
-    const events = await source.poll();
-    events
-      .filter(event => !upcomingEvents.has(event.id))
-      .forEach(handleNewContest);
-  });
+export async function checkForNewContests() {
+  (await getUpcomingEvents())
+    .filter(event => !upcomingEvents.has(event.id))
+    .forEach(handleNewContest);
 }

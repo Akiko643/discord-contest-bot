@@ -1,0 +1,39 @@
+{
+  "name": "discord-contest-bot",
+  "version": "1.0.0",
+  "description": "Discord contest notifier bot",
+  "main": "dist/cli.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/cli.js",
+    "test": "npx jest"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akiko643/discord-contest-bot.git"
+  },
+  "keywords": [
+    "programming",
+    "contest",
+    "bot",
+    "discord"
+  ],
+  "author": "G.Zolboobayar <zolboobayar@nhs.edu.mn>, A. Amarjargal <22a_amarjagral@nhs.edu.mn>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Akiko643/discord-contest-bot/issues"
+  },
+  "homepage": "https://github.com/Akiko643/discord-contest-bot#readme",
+  "devDependencies": {
+    "@nicepack/eslint-ts": "^1.0.1",
+    "@types/node": "^13.9.2",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  }
+}

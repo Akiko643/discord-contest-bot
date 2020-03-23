@@ -7,6 +7,7 @@ A bot sending notifications about upcoming contests to Discord.
 Currently supported platforms:
 
 - [Codeforces](https://codeforces.com)
+- [Leetcode](https://leetcode.com)
 
 ## Setup
 

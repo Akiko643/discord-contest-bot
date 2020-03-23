@@ -40,14 +40,9 @@ function handleNewContest(contest: UpcomingEvent) {
 }
 
 export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
-  const upcoming = [];
-  await Promise.all(
-    Array.from(eventSources.values()).map(async source => {
-      const events = await source.poll();
-      upcoming.push(...events);
-    }),
-  );
-  return upcoming;
+  return Promise.all(
+    Array.from(eventSources.values()).map(source => source.poll()),
+  ).then(events => events.flat());
 }
 
 // checkForNewContests fetches list of upcoming events and add new contests if found

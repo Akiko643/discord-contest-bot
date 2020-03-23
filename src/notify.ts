@@ -22,14 +22,15 @@ function handleNewContest(contest: UpcomingEvent) {
   if (upcomingEvents.has(contest.id)) {
     return;
   }
+
+  console.log(`Adding new contest with id ${contest.id}`);
   upcomingEvents.set(contest.id, contest);
 
   // For each interval in notifyIntervals create timeout sending notification to subscribedChannels
-  const currentTime = Date.now() / 1000;
   notifyIntervals.forEach(async interval => {
     const timeDist = contest.startTime - interval.remainingTime;
     await new Promise(resolve =>
-      setTimeout(() => resolve, (timeDist - currentTime) * 1000),
+      setTimeout(resolve, timeDist * 1000 - Date.now()),
     );
     subscribedChannels.forEach(channel => {
       channel.send(`Contest will start in ${interval.message}!!`);

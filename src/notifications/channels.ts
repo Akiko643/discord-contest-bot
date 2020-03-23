@@ -5,7 +5,7 @@ export interface ChannelLike {
   send(payload: MessageEmbed | string): Promise<any>;
 }
 
-const subscribedChannels: ChannelLike[] = [];
+const subscribedChannels: Map<string, ChannelLike> = new Map();
 
 // TODO: Implement this function
 export async function lookupChannel(
@@ -17,8 +17,8 @@ export async function lookupChannel(
 
 export function subscribeToChannel(channel: ChannelLike) {
   console.log(`Got subscription on channel #${channel.id}`);
-  subscribedChannels.push(channel);
+  subscribedChannels.set(channel.id, channel);
 }
 export function getSubscribedChannels(): ChannelLike[] {
-  return subscribedChannels;
+  return Array.from(subscribedChannels.values());
 }

@@ -39,15 +39,19 @@ function handleNewContest(contest: UpcomingEvent) {
   });
 }
 
-export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
+// checkForNewContests fetches list of upcoming events and add new contests if found
+export function checkForNewContests() {
   return Promise.all(
-    Array.from(eventSources.values()).map(source => source.poll()),
-  ).then(events => events.flat());
+    Array.from(eventSources.values()).map(source =>
+      source
+        .poll()
+        .then(events => events.filter(event => !upcomingEvents.has(event.id)))
+        .then(newEvents => newEvents.forEach(handleNewContest)),
+    ),
+  );
 }
 
-// checkForNewContests fetches list of upcoming events and add new contests if found
-export async function checkForNewContests() {
-  (await getUpcomingEvents())
-    .filter(event => !upcomingEvents.has(event.id))
-    .forEach(handleNewContest);
+export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
+  await checkForNewContests();
+  return Array.from(upcomingEvents.values());
 }

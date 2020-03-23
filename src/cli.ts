@@ -17,6 +17,11 @@ if (!process.env.DISCORD_TOKEN) {
 const client = new Discord.Client();
 
 client.once('ready', () => {
+  client.user
+    .setPresence({
+      activity: { name: '!help' },
+    })
+    .catch(console.error);
   setInterval(checkForNewContests, 60 * 60 * 1000);
   checkForNewContests();
 });

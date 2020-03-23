@@ -6,6 +6,7 @@ import Discord from 'discord.js';
 import { formatUpcomingEvent } from './event';
 import { checkForNewContests, getUpcomingEvents } from './notify';
 
+import '@/platforms/leetcode';
 import '@/platforms/codeforces';
 
 dotenv.config();

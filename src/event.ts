@@ -9,12 +9,6 @@ export type UpcomingEvent = {
   startTime: number;
 };
 
-// EventSource represents some programming contest platform API
-export interface EventSource {
-  // poll gets list of upcoming events. Must returns empty array if error occurred
-  poll(): Promise<UpcomingEvent[]>;
-}
-
 const minute = 60;
 const hour = 60 * minute;
 const day = 24 * hour;

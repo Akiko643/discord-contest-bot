@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { UpcomingEvent } from '@/event';
-import { addEventSource } from '@/notify';
+import { addEventSource } from '@/platforms/eventsource';
 
 type Contest = {
   id: number;

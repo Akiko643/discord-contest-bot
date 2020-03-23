@@ -1,10 +1,5 @@
-import { getSubscribedChannels } from '@/notifications/channels';
-import {
-  EventSource,
-  UpcomingEvent,
-  notifyIntervals,
-  formatUpcomingEvent,
-} from './event';
+import { prepareNotifications } from '@/notifications/contest';
+import { EventSource, UpcomingEvent } from './event';
 
 const eventSources: Map<string, EventSource> = new Map();
 export function addEventSource(eventSource: EventSource, id: string) {
@@ -26,19 +21,7 @@ function handleNewContest(contest: UpcomingEvent) {
   console.log(`Adding new contest with id ${contest.id}`);
   upcomingEvents.set(contest.id, contest);
 
-  // For each interval in notifyIntervals create timeout sending notification to subscribedChannels
-  notifyIntervals.forEach(async interval => {
-    const timeDist = contest.startTime - interval.remainingTime;
-    await new Promise(resolve =>
-      setTimeout(resolve, timeDist * 1000 - Date.now()),
-    );
-    getSubscribedChannels().forEach(channel => {
-      channel
-        .send(`Contest will start in ${interval.message}!`)
-        .catch(console.error);
-      channel.send(formatUpcomingEvent(contest)).catch(console.error);
-    });
-  });
+  prepareNotifications(contest);
 }
 
 // checkForNewContests fetches list of upcoming events and add new contests if found

@@ -32,22 +32,28 @@ client.on('message', async message => {
   // eslint-disable-next-line default-case
   switch (message.content) {
     case '!subscribe':
-      message.channel.send(
-        'Okay, I will notify you about upcoming contests here!',
-      );
+      message.channel
+        .send('Okay, I will notify you about upcoming contests here!')
+        .catch(console.error);
       subscribeToChannel(message.channel);
       break;
     case '!upcoming':
-      message.channel.send('Okay, let me check for upcoming events...');
+      message.channel
+        .send('Okay, let me check for upcoming events...')
+        .catch(console.error);
       (await getUpcomingEvents())
         .map(formatUpcomingEvent)
-        .forEach(eventMessage => message.channel.send(eventMessage));
+        .forEach(eventMessage =>
+          message.channel.send(eventMessage).catch(console.error),
+        );
       break;
     case '!help':
-      message.channel.send(
-        '!upcoming - Upcoming contests\n' +
-          '!subscribe - Notify upcoming events in this channel',
-      );
+      message.channel
+        .send(
+          '!upcoming - Upcoming contests\n' +
+            '!subscribe - Notify upcoming events in this channel',
+        )
+        .catch(console.error);
       break;
   }
 });

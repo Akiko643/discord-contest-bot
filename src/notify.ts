@@ -33,8 +33,10 @@ function handleNewContest(contest: UpcomingEvent) {
       setTimeout(resolve, timeDist * 1000 - Date.now()),
     );
     getSubscribedChannels().forEach(channel => {
-      channel.send(`Contest will start in ${interval.message}!!`);
-      channel.send(formatUpcomingEvent(contest));
+      channel
+        .send(`Contest will start in ${interval.message}!`)
+        .catch(console.error);
+      channel.send(formatUpcomingEvent(contest)).catch(console.error);
     });
   });
 }

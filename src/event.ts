@@ -11,7 +11,7 @@ export type UpcomingEvent = {
 
 // EventSource represents some programming contest platform API
 export interface EventSource {
-  // poll gets list of upcoming events
+  // poll gets list of upcoming events. Must returns empty array if error occurred
   poll(): Promise<UpcomingEvent[]>;
 }
 

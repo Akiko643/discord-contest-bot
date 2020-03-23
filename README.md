@@ -24,7 +24,7 @@ All you need is to load image and pass bot's token to container:
 docker run -dit --name discord-contest-bot -e DISCORD_TOKEN=<your token here> akiko643/discord-contest-bot
 ```
 
-### Running manually
+### Running manually:
 
 ```bash
 npm install

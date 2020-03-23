@@ -7,6 +7,8 @@ RUN npm ci
 
 COPY . .
 
+RUN npm run build
+
 FROM node:lts-alpine
 
 WORKDIR /usr/src/app

@@ -25,6 +25,7 @@ export const notifyIntervals = [
   { remainingTime: 2 * hour, message: 'two hours' },
   { remainingTime: 1 * hour, message: 'one hour' },
   { remainingTime: 30 * minute, message: '30 minutes' },
+  { remainingTime: 10 * minute, message: 'ten minutes' },
   { remainingTime: 5 * minute, message: 'five minutes' },
 ];
 

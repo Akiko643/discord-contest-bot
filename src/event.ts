@@ -4,7 +4,7 @@ export type UpcomingEvent = {
   id: string;
   url: string;
   name: string;
-  type: string;
+  type?: string;
   platform: string;
   startTime: number;
 };
@@ -32,10 +32,11 @@ export const notifyIntervals = [
 export function formatUpcomingEvent(
   event: UpcomingEvent,
 ): Discord.MessageEmbed {
-  return new Discord.MessageEmbed()
+  let message = new Discord.MessageEmbed()
     .setURL(event.url)
     .setColor('#0099ff')
     .setTitle(`${event.name} on ${event.platform}`)
-    .addField('Type', event.type)
     .addField('Start time', new Date(event.startTime * 1000).toString());
+  if (event.type) message = message.addField('Type', event.type);
+  return message;
 }

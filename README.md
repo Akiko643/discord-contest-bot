@@ -37,6 +37,12 @@ npm run build
 DISCORD_TOKEN=<your token here>
 ```
 
+## Setup for development
+- [Create Discord application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
+- [Add bot to server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html)
+- Create `.env` file in project root with `DISCORD_TOKEN`
+- Run `npm run dev` command
+
 ## Contributing
 
 PR's and issues are welcome 😉

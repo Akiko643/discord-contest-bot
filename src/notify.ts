@@ -1,4 +1,10 @@
-import { UpcomingEvent, EventSource } from './event';
+import {
+  UpcomingEvent,
+  EventSource,
+  notifyIntervals,
+  formatUpcomingEvent,
+} from './event';
+import { subscribedChannels } from '@/cli';
 
 const eventSources: Map<string, EventSource> = new Map();
 export function addEventSource(eventSource: EventSource, id: string) {
@@ -13,7 +19,22 @@ const upcomingEvents: Map<string, UpcomingEvent> = new Map();
 // handleNewContest add new contest to upcomingEvents map and creates notifiers
 function handleNewContest(contest: UpcomingEvent) {
   // Insert contest to upcomingEvents map
+  if (upcomingEvents.has(contest.id)) {
+    return;
+  }
+  upcomingEvents.set(contest.id, contest);
   // For each interval in notifyIntervals create timeout sending notification to subscribedChannels
+  const currentTime = Date.now() / 1000;
+
+  notifyIntervals.forEach(interval => {
+    const timeDist = contest.startTime - interval.remainingTime;
+    setTimeout(() => {
+      subscribedChannels.forEach(channel => {
+        channel.send(`Contest will start in ${interval.message}!!`);
+        channel.send(formatUpcomingEvent(contest));
+      });
+    }, (timeDist - currentTime) * 1000);
+  });
 }
 
 export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {

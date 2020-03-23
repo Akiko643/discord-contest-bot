@@ -3,6 +3,7 @@ import 'module-alias/register';
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
 
+import { subscribeToChannel } from './notifications/channels';
 import { formatUpcomingEvent } from './event';
 import { checkForNewContests, getUpcomingEvents } from './notify';
 
@@ -14,10 +15,6 @@ if (!process.env.DISCORD_TOKEN) {
 }
 
 const client = new Discord.Client();
-export const subscribedChannels: (
-  | Discord.TextChannel
-  | Discord.DMChannel
-)[] = [];
 
 client.once('ready', () => {
   setInterval(checkForNewContests, 60 * 60 * 1000);
@@ -33,7 +30,7 @@ client.on('message', async message => {
       message.channel.send(
         'Okay, I will notify you about upcoming contests here!',
       );
-      subscribedChannels.push(message.channel);
+      subscribeToChannel(message.channel);
       break;
     case '!upcoming':
       message.channel.send('Okay, let me check for upcoming events...');

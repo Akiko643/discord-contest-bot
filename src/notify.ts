@@ -1,4 +1,4 @@
-import { subscribedChannels } from '@/cli';
+import { getSubscribedChannels } from '@/notifications/channels';
 import {
   EventSource,
   UpcomingEvent,
@@ -32,7 +32,7 @@ function handleNewContest(contest: UpcomingEvent) {
     await new Promise(resolve =>
       setTimeout(resolve, timeDist * 1000 - Date.now()),
     );
-    subscribedChannels.forEach(channel => {
+    getSubscribedChannels().forEach(channel => {
       channel.send(`Contest will start in ${interval.message}!!`);
       channel.send(formatUpcomingEvent(contest));
     });

@@ -33,6 +33,7 @@
   "devDependencies": {
     "@nicepack/eslint-ts": "^1.0.1",
     "@types/node": "^13.9.2",
+    "@types/node-fetch": "^2.5.5",
     "eslint": "^6.8.0",
     "prettier": "^1.19.1",
     "tsc-watch": "^4.2.3",

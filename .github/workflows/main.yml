@@ -27,4 +27,4 @@ jobs:
           script: |
            docker pull akiko643/discord-contest-bot
            docker rm -f discord-contest-bot || true
-           docker run -it -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} --name discord-contest-bot akiko643/discord-contest-bot
+           docker run -dit -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} --name discord-contest-bot akiko643/discord-contest-bot

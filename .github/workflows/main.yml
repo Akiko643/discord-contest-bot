@@ -19,9 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Docker image
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@master
         with:
-          command: docker pull akiko643/discord-contest-bot && docker rm -f discord-contest-bot; docker run -it -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} --name discord-contest-bot akiko643/discord-contest-bot
           host: ${{ secrets.HOST }}
-          username: ubuntu
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+          docker pull akiko643/discord-contest-bot
+          docker rm -f discord-contest-bot || true
+          docker run -it -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} --name discord-contest-bot akiko643/discord-contest-bot

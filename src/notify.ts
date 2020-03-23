@@ -1,10 +1,10 @@
+import { subscribedChannels } from '@/cli';
 import {
-  UpcomingEvent,
   EventSource,
+  UpcomingEvent,
   notifyIntervals,
   formatUpcomingEvent,
 } from './event';
-import { subscribedChannels } from '@/cli';
 
 const eventSources: Map<string, EventSource> = new Map();
 export function addEventSource(eventSource: EventSource, id: string) {
@@ -23,17 +23,18 @@ function handleNewContest(contest: UpcomingEvent) {
     return;
   }
   upcomingEvents.set(contest.id, contest);
+
   // For each interval in notifyIntervals create timeout sending notification to subscribedChannels
   const currentTime = Date.now() / 1000;
-
-  notifyIntervals.forEach(interval => {
+  notifyIntervals.forEach(async interval => {
     const timeDist = contest.startTime - interval.remainingTime;
-    setTimeout(() => {
-      subscribedChannels.forEach(channel => {
-        channel.send(`Contest will start in ${interval.message}!!`);
-        channel.send(formatUpcomingEvent(contest));
-      });
-    }, (timeDist - currentTime) * 1000);
+    await new Promise(resolve =>
+      setTimeout(() => resolve, (timeDist - currentTime) * 1000),
+    );
+    subscribedChannels.forEach(channel => {
+      channel.send(`Contest will start in ${interval.message}!!`);
+      channel.send(formatUpcomingEvent(contest));
+    });
   });
 }
 

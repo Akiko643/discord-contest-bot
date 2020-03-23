@@ -1,4 +1,5 @@
 import { prepareNotifications } from '@/notifications/contest';
+
 import { UpcomingEvent } from './event';
 import { pollEventSources } from './platforms/eventsource';
 

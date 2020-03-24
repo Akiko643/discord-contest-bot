@@ -1,6 +1,7 @@
 # discord-contest-bot
 
 ![Build and deploy](https://github.com/Akiko643/discord-contest-bot/workflows/Build%20and%20deploy/badge.svg?branch=master)
+![Code quality](https://github.com/Akiko643/discord-contest-bot/workflows/Code%20quality/badge.svg?branch=master)
 
 A bot sending notifications about upcoming contests to Discord.
 
@@ -38,6 +39,7 @@ DISCORD_TOKEN=<your token here>
 ```
 
 ## Setup for development
+
 - [Create Discord application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
 - [Add bot to server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html)
 - Create `.env` file in project root with `DISCORD_TOKEN`

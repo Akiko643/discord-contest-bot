@@ -35,13 +35,14 @@ client.once('ready', () => {
 client.on('message', async message => {
   if (message.author.bot) return;
 
+  let response: string;
   // eslint-disable-next-line default-case
   switch (message.content) {
     case '!subscribe':
-      message.channel
-        .send('Okay, I will notify you about upcoming contests here!')
-        .catch(console.error);
-      subscribeToChannel(message.channel);
+      response = subscribeToChannel(message.channel)
+        ? 'Okay, I will notify you about upcoming contests here!'
+        : 'You have already subscribed to this channel!';
+      message.channel.send(response).catch(console.error);
       break;
     case '!upcoming':
       message.channel

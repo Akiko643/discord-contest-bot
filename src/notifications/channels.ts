@@ -36,10 +36,15 @@ async function saveChannels() {
 }
 
 export function subscribeToChannel(channel: ChannelLike) {
+  if (subscribedChannels.has(channel.id)) {
+    return false;
+  }
   console.log(`Got subscription on channel #${channel.id}`);
   subscribedChannels.set(channel.id, channel);
   saveChannels();
+  return true;
 }
+
 export function getSubscribedChannels(): ChannelLike[] {
   return Array.from(subscribedChannels.values());
 }

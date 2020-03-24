@@ -18,12 +18,14 @@ export async function loadSubscribedChannels(client: Client) {
       resolve(JSON.parse(rawData?.toString('utf-8') ?? '[]'));
     }),
   );
-  subscribedChannelIDs.forEach(id =>
-    client.channels
-      .fetch(id)
-      .then((channel: unknown) =>
-        subscribedChannels.set(id, channel as ChannelLike),
-      ),
+  return Promise.all(
+    subscribedChannelIDs.map(id =>
+      client.channels
+        .fetch(id)
+        .then((channel: unknown) =>
+          subscribedChannels.set(id, channel as ChannelLike),
+        ),
+    ),
   );
 }
 

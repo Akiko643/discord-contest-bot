@@ -3,9 +3,12 @@ import 'module-alias/register';
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
 
-import { subscribeToChannel } from './notifications/channels';
 import { formatUpcomingEvent } from './event';
 import { checkForNewContests, getUpcomingEvents } from './notify';
+import {
+  subscribeToChannel,
+  loadSubscribedChannels,
+} from './notifications/channels';
 
 import '@/platforms/codeforces';
 
@@ -22,6 +25,9 @@ client.once('ready', () => {
       activity: { name: '!help' },
     })
     .catch(console.error);
+
+  loadSubscribedChannels(client);
+
   setInterval(checkForNewContests, 60 * 60 * 1000);
   checkForNewContests();
 });

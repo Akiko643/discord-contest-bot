@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { MessageEmbed, Client, Channel } from 'discord.js';
+import { MessageEmbed, Client } from 'discord.js';
 
 export interface ChannelLike {
   id: string;
@@ -13,7 +13,7 @@ export async function loadSubscribedChannels(client: Client) {
     fs.readFile('subscribedChannels.json', (err, rawData) => {
       if (err) {
         console.error(err);
-        resolve(null);
+        resolve([]);
       }
       resolve(JSON.parse(rawData.toString('utf-8')));
     }),

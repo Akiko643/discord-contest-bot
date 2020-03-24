@@ -10,7 +10,7 @@ const subscribedChannels: Map<string, ChannelLike> = new Map();
 
 export async function loadSubscribedChannels(client: Client) {
   const subscribedChannelIDs: string[] = await new Promise(resolve =>
-    fs.readFile('subscribedChannels.json', (err, rawData) => {
+    fs.readFile('subscribedChannels.json', (err?: Error, rawData?: Buffer) => {
       if (err) {
         console.error(err);
         resolve([]);
@@ -27,6 +27,7 @@ export async function loadSubscribedChannels(client: Client) {
   );
 }
 
+// saveChannels saves subscribed channel IDs to separate file asynchronously
 async function saveChannels() {
   fs.writeFile(
     'subscribedChannels.json',

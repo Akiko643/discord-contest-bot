@@ -15,7 +15,7 @@ export async function loadSubscribedChannels(client: Client) {
         console.error(err);
         resolve([]);
       }
-      resolve(JSON.parse(rawData.toString('utf-8')));
+      resolve(JSON.parse(rawData?.toString('utf-8') ?? '[]'));
     }),
   );
   subscribedChannelIDs.forEach(id =>

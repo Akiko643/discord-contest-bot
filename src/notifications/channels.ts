@@ -1,4 +1,5 @@
-import { MessageEmbed, Client } from 'discord.js';
+import fs from 'fs';
+import { MessageEmbed, Client, Channel } from 'discord.js';
 
 export interface ChannelLike {
   id: string;
@@ -7,17 +8,37 @@ export interface ChannelLike {
 
 const subscribedChannels: Map<string, ChannelLike> = new Map();
 
-// TODO: Implement this function
-export async function lookupChannel(
-  client: Client,
-  id: string,
-): Promise<ChannelLike | null> {
-  return null;
+export async function loadSubscribedChannels(client: Client) {
+  const subscribedChannelIDs: string[] = await new Promise(resolve =>
+    fs.readFile('subscribedChannels.json', (err, rawData) => {
+      if (err) {
+        console.error(err);
+        resolve(null);
+      }
+      resolve(JSON.parse(rawData.toString('utf-8')));
+    }),
+  );
+  subscribedChannelIDs.forEach(id =>
+    client.channels
+      .fetch(id)
+      .then((channel: unknown) =>
+        subscribedChannels.set(id, channel as ChannelLike),
+      ),
+  );
+}
+
+async function saveChannels() {
+  fs.writeFile(
+    'subscribedChannels.json',
+    JSON.stringify(Array.from(subscribedChannels.keys())),
+    err => err && console.error(err),
+  );
 }
 
 export function subscribeToChannel(channel: ChannelLike) {
   console.log(`Got subscription on channel #${channel.id}`);
   subscribedChannels.set(channel.id, channel);
+  saveChannels();
 }
 export function getSubscribedChannels(): ChannelLike[] {
   return Array.from(subscribedChannels.values());

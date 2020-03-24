@@ -16,6 +16,13 @@ function handleNewContest(contest: UpcomingEvent) {
   upcomingEvents.set(contest.id, contest);
 
   prepareNotifications(contest);
+
+  const currentTime = Date.now() / 1000;
+  const timeDist = contest.startTime - currentTime;
+  setTimeout(() => {
+    console.log(`Contest ${contest.name} has begun!`);
+    upcomingEvents.delete(contest.id);      
+  }, timeDist * 1000);
 }
 
 // checkForNewContests fetches list of upcoming events and add new contests if found

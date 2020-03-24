@@ -21,7 +21,7 @@ function handleNewContest(contest: UpcomingEvent) {
   const timeDist = contest.startTime - currentTime;
   setTimeout(() => {
     console.log(`Contest ${contest.name} has begun!`);
-    upcomingEvents.delete(contest.id);      
+    upcomingEvents.delete(contest.id);
   }, timeDist * 1000);
 }
 

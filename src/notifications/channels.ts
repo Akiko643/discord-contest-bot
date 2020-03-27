@@ -39,13 +39,14 @@ async function saveChannels() {
 }
 
 export function unsubcribeFromChannel(channel: ChannelLike) {
-  if (subscribedChannels.has(channel.id)) {
-    subscribedChannels.delete(channel.id);
-    saveChannels();
-    return true;
+  if (!subscribedChannels.has(channel.id)) {
+    console.log(`Haven't subscription on channel #${channel.id}`);
+    return false;
   }
-  console.log(`Haven't subcription on channel #${channel.id}`);
-  return false;
+
+  subscribedChannels.delete(channel.id);
+  saveChannels();
+  return true;
 }
 
 export function subscribeToChannel(channel: ChannelLike) {

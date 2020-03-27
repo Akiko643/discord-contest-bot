@@ -38,6 +38,16 @@ async function saveChannels() {
   );
 }
 
+export function unsubcribeFromChannel(channel: ChannelLike) {
+  if (subscribedChannels.has(channel.id)) {
+    subscribedChannels.delete(channel.id);
+    saveChannels();
+    return true;
+  }
+  console.log(`Haven't subcription on channel #${channel.id}`);
+  return false;
+}
+
 export function subscribeToChannel(channel: ChannelLike) {
   if (subscribedChannels.has(channel.id)) {
     return false;

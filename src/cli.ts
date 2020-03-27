@@ -8,6 +8,7 @@ import { checkForNewContests, getUpcomingEvents } from './notify';
 import {
   subscribeToChannel,
   loadSubscribedChannels,
+  unsubcribeFromChannel,
 } from './notifications/channels';
 
 import '@/platforms/codeforces';
@@ -58,9 +59,16 @@ client.on('message', async message => {
       message.channel
         .send(
           '!upcoming - Upcoming contests\n' +
-            '!subscribe - Notify upcoming events in this channel',
+            '!subscribe - Notify upcoming events in this channel\n' +
+            '!unsubscribe - Stop notify',
         )
         .catch(console.error);
+      break;
+    case '!unsubscribe':
+      response = unsubcribeFromChannel(message.channel)
+        ? 'Okay, I will not notify'
+        : "You haven't subscription on this channel!";
+      message.channel.send(response).catch(console.error);
       break;
   }
 });

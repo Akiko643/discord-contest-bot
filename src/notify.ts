@@ -34,5 +34,7 @@ export function checkForNewContests() {
 
 export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
   await checkForNewContests();
-  return Array.from(upcomingEvents.values());
+  const Events = Array.from(upcomingEvents.values());
+  Events.sort((a, b) => (a.startTime > b.startTime) ? 1 : -1);
+  return Events;
 }
